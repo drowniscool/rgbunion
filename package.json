@@ -1,0 +1,42 @@
+{
+	"name": "rgbunion",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "npm run build && wrangler pages dev",
+		"prepare": "svelte-kit sync || echo ''",
+		"proxy": "wrangler dev node_modules/cfw-bindings-wrangler-bridge/worker/index.js",
+		"deploy": "npm run build && npx wrangler pages deploy .svelte-kit/cloudflare --commit-dirty=true --branch=master",
+		"db:gen": "drizzle-kit generate",
+		"db:mig:local": "wrangler d1 migrations apply rgbunion --local",
+		"db:mig:prod": "wrangler d1 migrations apply rgbunion --remote",
+		"db:mig:preview": "wrangler d1 migrations apply rgbunion --preview",
+		"db:studio:dev": "drizzle-kit studio",
+		"db:studio:prd": "cross-env NODE_ENV=production drizzle-kit studio"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-cloudflare": "^7.0.1",
+		"@sveltejs/kit": "^2.16.0",
+		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"drizzle-kit": "^0.30.6",
+		"svelte": "^5.0.0",
+		"vite": "^6.0.0",
+		"wrangler": "^4.9.1"
+	},
+	"dependencies": {
+		"@iconify/svelte": "^4.2.0",
+		"@lucia-auth/adapter-sqlite": "^3.0.2",
+		"@lucide/svelte": "^0.488.0",
+		"@tailwindcss/vite": "^4.1.3",
+		"better-sqlite3": "^11.9.1",
+		"cfw-bindings-wrangler-bridge": "^0.11.0",
+		"drizzle-orm": "^0.41.0",
+		"lucia": "^3.2.2",
+		"lucide-svelte": "^0.488.0",
+		"svelte-icons": "^2.1.0",
+		"zod": "^3.24.2"
+	}
+}
