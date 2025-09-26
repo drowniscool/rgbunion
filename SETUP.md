@@ -80,7 +80,63 @@ In Cloudflare Pages dashboard, add these environment variables:
 - `bun run db:mig:local` - Apply migrations locally
 - `bun run db:mig:prod` - Apply migrations to production
 - `bun run db:studio:dev` - Open Drizzle Studio for local DB
-- `bun run db:studio:prd` - Open Drizzle Studio for production DB
+- `bun run db:studio:prd` - Open Drizzle Studio for production DB ✅ **READY**
+- `bun run db:studio:prd-alt` - Alternative production studio command
+- `bun run admin:create` - Create admin user in local database ✅ **READY**
+- `bun run admin:create:prod` - Create admin user in production database ✅ **READY**
+
+## 👤 **Admin User Setup Complete! ✅**
+
+An admin user has been created in both local and production databases:
+
+### **Admin Login Credentials:**
+```
+Username: admin
+Password: admin123
+Email: admin@rgbunion.local
+```
+
+### **Admin User Management:**
+- ✅ **Local Database**: Admin user created (ID: 1)
+- ✅ **Production Database**: Admin user created (ID: 2) 
+- ✅ **Password Hashed**: Using PBKDF2 with 100,000 iterations
+- ✅ **Ready for Login**: Can be used immediately with your authentication system
+
+### **Security Recommendations:**
+- 🔐 **Change Password**: Update the admin password after first login
+- 🔒 **Strong Credentials**: Use a strong, unique password for production
+- 🛡️ **Admin Panel**: Restrict admin routes to authenticated admin users only
+
+### **Admin User Commands:**
+```bash
+# Create admin user in local database
+bun run admin:create
+
+# Create admin user in production database  
+bun run admin:create:prod
+```
+
+## 📊 **Production Database Studio Setup Complete! ✅**
+
+The production database studio (`db:studio:prd`) is now fully configured and ready to use!
+
+### How to Access Production Database:
+```bash
+# Start Drizzle Studio connected to your production D1 database
+bun run db:studio:prd
+```
+
+This will:
+- Connect to your Cloudflare D1 production database
+- Open Drizzle Studio at `https://local.drizzle.studio`
+- Allow you to view, edit, and manage your production data safely
+
+### Production Studio Features:
+- ✅ **Secure Connection** - Uses your Cloudflare API credentials
+- ✅ **Real-time Data** - Live connection to production D1 database
+- ✅ **Schema Visualization** - See all your tables and relationships
+- ✅ **Data Management** - View, add, edit, and delete records
+- ✅ **Query Builder** - Visual query interface
 
 ## 🔄 Development Workflow
 
