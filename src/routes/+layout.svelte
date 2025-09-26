@@ -19,10 +19,8 @@
 </svelte:head>
 
 <div class="min-h-screen flex flex-col">
-  <!-- Navbar - only show on non-home pages or when user is logged in -->
-  {#if !isHomePage || $loggedIn}
-    <Navbar user={$user} loggedIn={$loggedIn} isAdmin={data.isAdmin} />
-  {/if}
+  <!-- Navbar - shown on all pages for consistent navigation -->
+  <Navbar user={$user} loggedIn={$loggedIn} isAdmin={data.isAdmin} />
 
   <main class="flex-grow">
     {@render children()}

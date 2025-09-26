@@ -15,7 +15,7 @@
     X
   } from 'lucide-svelte';
 
-  let { user, loggedIn, isAdmin } = $props();
+  let { user = null, loggedIn = false, isAdmin = false } = $props();
 
   let mobileMenuOpen = $state(false);
   let mounted = $state(false);
@@ -25,19 +25,18 @@
 
   // Navigation items for different user types
   const publicNavItems = [
-    { href: '/', label: 'Home', icon: Home }
+    { href: '/shop', label: 'Shop', icon: Store }
   ];
 
   const userNavItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/admin/account', label: 'Account', icon: Settings }
+    { href: '/shop', label: 'Shop', icon: Store },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }
   ];
 
   const adminNavItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/admin', label: 'Admin', icon: User },
     { href: '/shop', label: 'Shop', icon: Store },
-    { href: '/admin/account', label: 'Account', icon: Settings }
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/admin', label: 'Admin', icon: User }
   ];
 
   // Get current navigation items based on authentication and admin status
@@ -95,7 +94,7 @@
       <div class="navbar-brand flex-shrink-0">
         <button
           onclick={() => handleNavigation(loggedIn ? '/dashboard' : '/')}
-          class="brand-link group flex items-center focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900 rounded-lg p-2"
+          class="brand-link group flex items-center focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-900 rounded-lg p-2"
           aria-label="RGBUNION Home"
         >
           <div class="brand-text relative">
@@ -109,47 +108,55 @@
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="navbar-desktop hidden lg:flex items-center space-x-1">
-        {#each navItems as item}
-          <button
-            onclick={() => handleNavigation(item.href)}
-            class="nav-item group flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-            class:nav-item-active={isActive(item.href)}
-            aria-label={item.label}
-          >
-            <svelte:component this={item.icon} class="nav-icon w-5 h-5 transition-transform group-hover:scale-110" />
-            <span class="nav-text font-medium tracking-wide">{item.label}</span>
-          </button>
-        {/each}
+      <div class="navbar-tabs-desktop hidden lg:flex items-center">
+        <!-- Navigation Tab Group -->
+        <div class="nav-tab-group flex items-center gap-1 bg-slate-800/50 rounded-xl p-1 backdrop-blur-sm border border-[#BF953F]/20">
+          {#each navItems() as item}
+            <button
+              onclick={() => handleNavigation(item.href)}
+              class="nav-tab flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-900 group"
+              class:nav-tab-active={isActive(item.href)}
+              class:nav-tab-inactive={!isActive(item.href)}
+              aria-label={item.label}
+            >
+              <svelte:component this={item.icon} class="nav-tab-icon w-4 h-4 transition-all duration-300 group-hover:scale-110" />
+              <span class="nav-tab-text text-sm font-medium tracking-wider">{item.label}</span>
+            </button>
+          {/each}
+        </div>
 
-        {#if loggedIn}
-          <div class="nav-divider w-px h-6 bg-slate-600 mx-2"></div>
-          <button
-            onclick={handleLogout}
-            class="nav-item logout-item group flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-            aria-label="Logout"
-          >
-            <LogOut class="nav-icon w-5 h-5 transition-transform group-hover:scale-110" />
-            <span class="nav-text font-medium tracking-wide">Logout</span>
-          </button>
-        {:else}
-          <div class="nav-divider w-px h-6 bg-slate-600 mx-2"></div>
-          <button
-            onclick={() => handleNavigation('/login')}
-            class="login-button group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-            aria-label="Login"
-          >
-            <LogIn class="w-5 h-5 transition-transform group-hover:scale-110" />
-            <span class="tracking-wide">Login</span>
-          </button>
-        {/if}
+        <!-- Authentication Action Section -->
+        <div class="nav-auth-section ml-4 flex items-center">
+          {#if loggedIn}
+            <div class="nav-divider w-px h-6 bg-[#BF953F]/30 mr-4"></div>
+            <button
+              onclick={handleLogout}
+              class="nav-logout-btn group flex items-center gap-2 px-4 py-2.5 rounded-lg border border-red-400/30 text-red-300 hover:text-red-200 hover:bg-red-400/10 hover:border-red-400/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+              aria-label="Logout"
+            >
+              <LogOut class="nav-logout-icon w-4 h-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
+              <span class="text-sm font-medium tracking-wider">Logout</span>
+            </button>
+          {:else}
+            <div class="nav-divider w-px h-6 bg-[#BF953F]/30 mr-4"></div>
+            <button
+              onclick={() => handleNavigation('/login')}
+              class="nav-login-btn group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#BF953F] to-[#B38728] hover:from-[#B38728] hover:to-[#BF953F] text-black font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#BF953F]/30 focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-900 relative overflow-hidden"
+              aria-label="Login"
+            >
+              <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <LogIn class="nav-login-icon w-4 h-4 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 relative z-10" />
+              <span class="text-sm tracking-wider relative z-10">Login</span>
+            </button>
+          {/if}
+        </div>
       </div>
 
       <!-- Mobile Menu Toggle -->
       <div class="navbar-mobile lg:hidden">
         <button
           onclick={() => mobileMenuOpen = !mobileMenuOpen}
-          class="navbar-mobile-toggle p-2 rounded-lg text-slate-300 hover:text-amber-400 hover:bg-slate-800/50 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+          class="navbar-mobile-toggle p-2 rounded-lg text-[#FCF6BA]/70 hover:text-[#BF953F] hover:bg-[#BF953F]/10 transition-colors focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-900"
           aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileMenuOpen}
         >
@@ -168,44 +175,56 @@
         class="navbar-mobile-menu lg:hidden"
         transition:slide={{ duration: 300, easing: cubicOut }}
       >
-        <div class="mobile-menu-content px-2 pt-2 pb-4 space-y-1 bg-slate-900/95 backdrop-blur-md rounded-b-xl border-t border-slate-700/50">
-          {#each navItems as item, index}
-            <button
-              onclick={() => handleNavigation(item.href)}
-              class="mobile-nav-item group flex items-center gap-4 w-full px-4 py-3 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-              class:mobile-nav-item-active={isActive(item.href)}
-              style="animation-delay: {index * 50}ms"
-              aria-label={item.label}
-              in:fly={{ x: -20, duration: 300, delay: index * 50 }}
-            >
-              <svelte:component this={item.icon} class="mobile-nav-icon w-5 h-5 transition-transform group-hover:scale-110" />
-              <span class="mobile-nav-text font-medium tracking-wide">{item.label}</span>
-            </button>
-          {/each}
+        <div class="mobile-menu-content px-3 pt-3 pb-4 space-y-2 bg-slate-800/95 backdrop-blur-md rounded-b-xl border-t border-[#BF953F]/30">
+          <!-- Mobile Navigation Tabs -->
+          <div class="mobile-nav-tabs space-y-1">
+            {#each navItems() as item, index}
+              <button
+                onclick={() => handleNavigation(item.href)}
+                class="mobile-nav-tab group flex items-center gap-3 w-full px-4 py-3.5 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-800 relative overflow-hidden"
+                class:mobile-nav-tab-active={isActive(item.href)}
+                class:mobile-nav-tab-inactive={!isActive(item.href)}
+                style="animation-delay: {index * 50}ms; min-height: 44px;"
+                aria-label={item.label}
+                in:fly={{ x: -20, duration: 300, delay: index * 50 }}
+              >
+                <div class="mobile-nav-tab-border absolute left-0 top-0 bottom-0 w-1 transition-all duration-300" class:bg-[#BF953F]={isActive(item.href)} class:bg-transparent={!isActive(item.href)}></div>
+                <svelte:component this={item.icon} class="mobile-nav-tab-icon w-5 h-5 transition-all duration-300 group-hover:scale-110" />
+                <span class="mobile-nav-tab-text font-medium tracking-wide text-left flex-1">{item.label}</span>
+                {#if isActive(item.href)}
+                  <div class="mobile-nav-tab-indicator w-2 h-2 rounded-full bg-[#BF953F] animate-pulse"></div>
+                {/if}
+              </button>
+            {/each}
+          </div>
 
-          <div class="mobile-menu-divider h-px bg-slate-700/50 my-2"></div>
-
-          {#if loggedIn}
-            <button
-              onclick={handleLogout}
-              class="mobile-nav-item logout-item group flex items-center gap-4 w-full px-4 py-3 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-              aria-label="Logout"
-              in:fly={{ x: -20, duration: 300, delay: navItems.length * 50 }}
-            >
-              <LogOut class="mobile-nav-icon w-5 h-5 transition-transform group-hover:scale-110" />
-              <span class="mobile-nav-text font-medium tracking-wide">Logout</span>
-            </button>
-          {:else}
-            <button
-              onclick={() => handleNavigation('/login')}
-              class="mobile-login-button group flex items-center gap-4 w-full px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/25 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-              aria-label="Login"
-              in:fly={{ x: -20, duration: 300, delay: navItems.length * 50 }}
-            >
-              <LogIn class="w-5 h-5 transition-transform group-hover:scale-110" />
-              <span class="tracking-wide">Login</span>
-            </button>
-          {/if}
+          <!-- Mobile Auth Section -->
+          <div class="mobile-auth-section pt-2 border-t border-[#BF953F]/20">
+            {#if loggedIn}
+              <button
+                onclick={handleLogout}
+                class="mobile-logout-btn group flex items-center gap-3 w-full px-4 py-3.5 rounded-lg border border-red-400/30 text-red-300 hover:text-red-200 hover:bg-red-400/10 hover:border-red-400/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-slate-800 relative overflow-hidden"
+                style="min-height: 44px;"
+                aria-label="Logout"
+                in:fly={{ x: -20, duration: 300, delay: navItems().length * 50 }}
+              >
+                <LogOut class="mobile-logout-icon w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                <span class="mobile-logout-text font-medium tracking-wide text-left flex-1">Logout</span>
+              </button>
+            {:else}
+              <button
+                onclick={() => handleNavigation('/login')}
+                class="mobile-login-btn group flex items-center gap-3 w-full px-4 py-4 bg-gradient-to-r from-[#BF953F] to-[#B38728] hover:from-[#B38728] hover:to-[#BF953F] text-black font-semibold rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#BF953F]/25 focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-800 relative overflow-hidden"
+                style="min-height: 44px;"
+                aria-label="Login"
+                in:fly={{ x: -20, duration: 300, delay: navItems().length * 50 }}
+              >
+                <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <LogIn class="mobile-login-icon w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 relative z-10" />
+                <span class="mobile-login-text tracking-wide text-left flex-1 relative z-10">Login</span>
+              </button>
+            {/if}
+          </div>
         </div>
       </div>
     {/if}
@@ -214,9 +233,9 @@
 
 <style>
   .navbar-container {
-    background: rgba(2, 6, 23, 0.95);
+    background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    border-bottom: 1px solid rgba(191, 149, 63, 0.2);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -258,82 +277,123 @@
     to { width: 100%; }
   }
 
-  /* Desktop Navigation Styles */
-  .nav-item {
-    color: rgb(148, 163, 184);
-    position: relative;
-    overflow: hidden;
+  /* Desktop Navigation Tab Styles */
+  .nav-tab-group {
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(191, 149, 63, 0.1);
   }
 
-  .nav-item:hover {
-    color: rgb(251, 191, 36);
-    background: rgba(251, 191, 36, 0.1);
+  .nav-tab {
+    position: relative;
+    letter-spacing: 0.025em;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Inactive Tab State */
+  .nav-tab-inactive {
+    color: rgba(252, 246, 186, 0.7);
+    background: transparent;
+    border: 1px solid transparent;
+  }
+
+  .nav-tab-inactive:hover {
+    color: rgba(252, 246, 186, 0.9);
+    background: rgba(191, 149, 63, 0.1);
+    border: 1px solid rgba(191, 149, 63, 0.2);
     transform: translateY(-1px);
   }
 
-  .nav-item-active {
-    color: rgb(251, 191, 36);
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
-    box-shadow: inset 0 1px 0 0 rgba(251, 191, 36, 0.3);
+  /* Active Tab State */
+  .nav-tab-active {
+    color: rgb(191, 149, 63);
+    background: linear-gradient(135deg, rgba(191, 149, 63, 0.15), rgba(179, 135, 40, 0.1));
+    border: 1px solid rgba(191, 149, 63, 0.3);
+    box-shadow: inset 0 1px 0 0 rgba(191, 149, 63, 0.2);
   }
 
-  .nav-item-active .nav-icon,
-  .nav-item-active .nav-text {
-    color: rgb(251, 191, 36);
-    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+  .nav-tab-active .nav-tab-icon,
+  .nav-tab-active .nav-tab-text {
+    text-shadow: 0 0 10px rgba(191, 149, 63, 0.3);
   }
 
-  .logout-item:hover {
-    color: rgb(248, 113, 113);
-    background: rgba(248, 113, 113, 0.1);
+  /* Tab Icon and Text Transitions */
+  .nav-tab-icon,
+  .nav-tab-text {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .login-button {
-    box-shadow: 0 4px 14px 0 rgba(251, 191, 36, 0.2);
+  /* Authentication Button Styles */
+  .nav-logout-btn {
+    backdrop-filter: blur(8px);
   }
 
-  .login-button:hover {
-    box-shadow: 0 6px 20px 0 rgba(251, 191, 36, 0.4);
+  .nav-logout-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px 0 rgba(248, 113, 113, 0.2);
   }
 
-  /* Mobile Navigation Styles */
-  .mobile-nav-item {
-    color: rgb(148, 163, 184);
-    background: rgba(51, 65, 85, 0.3);
-    border: 1px solid rgba(148, 163, 184, 0.1);
+  .nav-login-btn {
+    box-shadow: 0 4px 14px 0 rgba(191, 149, 63, 0.3);
+    backdrop-filter: blur(8px);
   }
 
-  .mobile-nav-item:hover {
-    color: rgb(251, 191, 36);
-    background: rgba(251, 191, 36, 0.1);
-    border-color: rgba(251, 191, 36, 0.3);
+  .nav-login-btn:hover {
+    box-shadow: 0 6px 20px 0 rgba(191, 149, 63, 0.4);
+  }
+
+  /* Mobile Navigation Tab Styles */
+  .mobile-nav-tab {
+    position: relative;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Mobile Inactive Tab State */
+  .mobile-nav-tab-inactive {
+    color: rgba(252, 246, 186, 0.7);
+    background: rgba(191, 149, 63, 0.05);
+    border: 1px solid rgba(191, 149, 63, 0.15);
+  }
+
+  .mobile-nav-tab-inactive:hover {
+    color: rgba(252, 246, 186, 0.9);
+    background: rgba(191, 149, 63, 0.1);
+    border: 1px solid rgba(191, 149, 63, 0.25);
     transform: translateX(4px);
   }
 
-  .mobile-nav-item-active {
-    color: rgb(251, 191, 36);
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
-    border-color: rgba(251, 191, 36, 0.4);
-    box-shadow: inset 3px 0 0 0 rgb(251, 191, 36);
+  /* Mobile Active Tab State */
+  .mobile-nav-tab-active {
+    color: rgb(191, 149, 63);
+    background: linear-gradient(135deg, rgba(191, 149, 63, 0.15), rgba(179, 135, 40, 0.1));
+    border: 1px solid rgba(191, 149, 63, 0.3);
+    box-shadow: inset 0 1px 0 0 rgba(191, 149, 63, 0.2);
   }
 
-  .mobile-nav-item-active .mobile-nav-icon,
-  .mobile-nav-item-active .mobile-nav-text {
-    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+  .mobile-nav-tab-active .mobile-nav-tab-icon,
+  .mobile-nav-tab-active .mobile-nav-tab-text {
+    text-shadow: 0 0 10px rgba(191, 149, 63, 0.3);
   }
 
-  .mobile-nav-item.logout-item:hover {
-    color: rgb(248, 113, 113);
-    background: rgba(248, 113, 113, 0.1);
-    border-color: rgba(248, 113, 113, 0.3);
+  /* Mobile Authentication Button Styles */
+  .mobile-logout-btn {
+    backdrop-filter: blur(8px);
   }
 
-  .mobile-login-button {
-    box-shadow: 0 4px 14px 0 rgba(251, 191, 36, 0.3);
+  .mobile-logout-btn:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px 0 rgba(248, 113, 113, 0.2);
   }
 
-  .mobile-login-button:hover {
-    box-shadow: 0 6px 20px 0 rgba(251, 191, 36, 0.4);
+  .mobile-login-btn {
+    box-shadow: 0 4px 14px 0 rgba(191, 149, 63, 0.3);
+    backdrop-filter: blur(8px);
+  }
+
+  .mobile-login-btn:hover {
+    box-shadow: 0 6px 20px 0 rgba(191, 149, 63, 0.4);
   }
 
   /* Responsive adjustments */
@@ -343,26 +403,127 @@
     }
   }
 
-  /* Focus styles for accessibility */
-  .nav-item:focus,
-  .mobile-nav-item:focus {
+  /* Enhanced Focus Styles for Accessibility */
+  .nav-tab:focus-visible,
+  .mobile-nav-tab:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
+    box-shadow: 0 0 0 3px rgba(191, 149, 63, 0.6), inset 0 0 0 2px rgba(252, 246, 186, 0.8);
+    transform: translateY(-1px);
   }
 
-  .navbar-mobile-toggle:focus {
+  .nav-logout-btn:focus-visible,
+  .mobile-logout-btn:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.6), inset 0 0 0 2px rgba(252, 246, 186, 0.8);
   }
 
-  /* Animation improvements */
-  .nav-icon,
-  .mobile-nav-icon {
+  .nav-login-btn:focus-visible,
+  .mobile-login-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(191, 149, 63, 0.6), inset 0 0 0 2px rgba(0, 0, 0, 0.8);
+  }
+
+  .navbar-mobile-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(191, 149, 63, 0.6);
+  }
+
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .nav-tab,
+    .mobile-nav-tab,
+    .nav-logout-btn,
+    .nav-login-btn,
+    .mobile-logout-btn,
+    .mobile-login-btn,
+    .nav-tab-icon,
+    .mobile-nav-tab-icon,
+    .navbar-mobile-toggle {
+      transition: none;
+      animation: none;
+    }
+
+    .nav-tab:hover,
+    .mobile-nav-tab:hover {
+      transform: none;
+    }
+
+    .nav-logout-btn:hover,
+    .nav-login-btn:hover,
+    .mobile-logout-btn:hover,
+    .mobile-login-btn:hover {
+      transform: none;
+    }
+  }
+
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    .nav-tab-active,
+    .mobile-nav-tab-active {
+      border: 2px solid rgb(191, 149, 63);
+      background: rgba(191, 149, 63, 0.3);
+    }
+
+    .nav-tab-inactive,
+    .mobile-nav-tab-inactive {
+      border: 1px solid rgba(252, 246, 186, 0.5);
+    }
+  }
+
+  /* Enhanced Animation Improvements */
+  .nav-tab-icon,
+  .mobile-nav-tab-icon,
+  .nav-logout-icon,
+  .nav-login-icon,
+  .mobile-logout-icon,
+  .mobile-login-icon {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .nav-text,
-  .mobile-nav-text {
+  .nav-tab-text,
+  .mobile-nav-tab-text,
+  .nav-logout-text,
+  .nav-login-text,
+  .mobile-logout-text,
+  .mobile-login-text {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Tab Group Container Enhancements */
+  .nav-tab-group:hover {
+    box-shadow: 0 6px 25px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(191, 149, 63, 0.15);
+  }
+
+  /* Mobile Navigation Enhancements */
+  .mobile-nav-tabs {
+    animation: mobileTabsSlideIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  @keyframes mobileTabsSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Auth Section Enhancements */
+  .nav-auth-section,
+  .mobile-auth-section {
+    animation: authSectionFadeIn 0.5s ease-out 0.2s both;
+  }
+
+  @keyframes authSectionFadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 </style>

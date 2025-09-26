@@ -8,5 +8,5 @@ export async function load({ locals }) {
     locals.session = null;
   }
 
-  redirect(307, "/login");
+  redirect(307, "/");
 }

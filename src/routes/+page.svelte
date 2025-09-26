@@ -71,10 +71,10 @@
 </script>
 
 <svelte:head>
-  <title>RGBUNION - Shop Links</title>
-  <meta name="description" content="Browse our collection of curated shop links and services.">
-  <meta property="og:title" content="RGBUNION - Shop Links">
-  <meta property="og:description" content="Discover our curated collection of quality shop links and services.">
+  <title>RGBUNION - Digital Marketplace</title>
+  <meta name="description" content="Professional digital services and marketplace solutions.">
+  <meta property="og:title" content="RGBUNION - Digital Marketplace">
+  <meta property="og:description" content="Premium digital services and marketplace solutions for professionals.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </svelte:head>
 
@@ -82,38 +82,24 @@
   <!-- Subtle Background Pattern -->
   <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNCRjk1M0YiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iNCIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
 
-  <!-- Header -->
-  <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-8">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <!-- Logo -->
-      <div class="text-center">
-        <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600 font-serif">
+  <!-- Hero Section -->
+  <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-6xl mx-auto text-center">
+      <!-- Hero Logo -->
+      <div class="mb-8">
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] font-serif tracking-wide mb-4">
           RGBUNION
         </h1>
-        <p class="text-slate-400 text-sm sm:text-base mt-1">
-          Shop Links Collection
+        <div class="flex items-center justify-center gap-4 mb-6">
+          <div class="h-px bg-gradient-to-r from-transparent via-[#BF953F] to-transparent flex-1 max-w-24"></div>
+          <p class="text-[#FCF6BA] text-lg sm:text-xl font-medium tracking-wide">
+            Digital Marketplace
+          </p>
+          <div class="h-px bg-gradient-to-r from-transparent via-[#BF953F] to-transparent flex-1 max-w-24"></div>
+        </div>
+        <p class="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">
+          Professional digital services and premium marketplace solutions
         </p>
-      </div>
-
-      <!-- Auth Controls -->
-      <div class="flex gap-3">
-        {#if data.loggedIn}
-          <button
-            on:click={handleDashboard}
-            class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-medium rounded-lg transition-all duration-300 hover:scale-105"
-          >
-            Dashboard
-            <ArrowRight class="w-4 h-4" />
-          </button>
-        {:else}
-          <button
-            on:click={handleLogin}
-            class="flex items-center gap-2 px-4 py-2 border border-slate-600 hover:border-amber-500 text-slate-300 hover:text-white font-medium rounded-lg transition-all duration-300 hover:bg-amber-500/10"
-          >
-            <LogIn class="w-4 h-4" />
-            Login
-          </button>
-        {/if}
       </div>
     </div>
   </header>
@@ -124,47 +110,94 @@
       {#if mounted}
         <!-- Welcome Section -->
         <div
-          class="text-center mb-12"
+          class="text-center mb-16"
           in:fly={{ y: 30, duration: 800, delay: 200 }}
         >
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
-            Explore Our Shop Links
-          </h2>
-          <p class="text-lg text-slate-400 max-w-2xl mx-auto">
-            Discover our carefully curated collection of quality services and platforms
-          </p>
+          <div class="mb-8">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              Premium
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728]">
+                Services
+              </span>
+            </h2>
+            <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
+              Professional digital marketplace offering specialized services and premium data solutions.
+              Discrete, reliable, and efficient operations for business needs.
+            </p>
+          </div>
+
+          <!-- Service Features -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div class="flex flex-col items-center p-4 bg-slate-800/30 rounded-xl border border-slate-700/50">
+              <div class="w-12 h-12 bg-[#BF953F]/20 rounded-full flex items-center justify-center mb-3">
+                <Icon icon="mdi:database-lock" width="24" height="24" class="text-[#BF953F]" />
+              </div>
+              <h3 class="text-white font-semibold mb-1">Data Solutions</h3>
+              <p class="text-slate-400 text-sm text-center">Specialized data services</p>
+            </div>
+
+            <div class="flex flex-col items-center p-4 bg-slate-800/30 rounded-xl border border-slate-700/50">
+              <div class="w-12 h-12 bg-[#BF953F]/20 rounded-full flex items-center justify-center mb-3">
+                <Icon icon="mdi:shield-check" width="24" height="24" class="text-[#BF953F]" />
+              </div>
+              <h3 class="text-white font-semibold mb-1">Secure Operations</h3>
+              <p class="text-slate-400 text-sm text-center">Professional reliability</p>
+            </div>
+
+            <div class="flex flex-col items-center p-4 bg-slate-800/30 rounded-xl border border-slate-700/50">
+              <div class="w-12 h-12 bg-[#BF953F]/20 rounded-full flex items-center justify-center mb-3">
+                <Icon icon="mdi:clock-fast" width="24" height="24" class="text-[#BF953F]" />
+              </div>
+              <h3 class="text-white font-semibold mb-1">Fast Delivery</h3>
+              <p class="text-slate-400 text-sm text-center">Efficient processing</p>
+            </div>
+          </div>
         </div>
 
-        <!-- Links Grid -->
+        <!-- Service Links Section -->
         {#if data.links && data.links.length > 0}
+          <div class="mb-12">
+            <div class="text-center mb-8">
+              <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3">
+                Service
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] to-[#B38728]">
+                  Access
+                </span>
+              </h3>
+              <p class="text-slate-400 max-w-2xl mx-auto">
+                Access our professional services and marketplace offerings through verified channels.
+              </p>
+            </div>
+          </div>
+
           <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             in:fly={{ y: 30, duration: 800, delay: 400 }}
           >
             {#each data.links as link, index (link.id)}
               <div
-                class="group relative bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-amber-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/10"
+                class="group relative bg-gradient-to-br from-slate-800/70 to-slate-900/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 hover:border-[#BF953F]/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-[#BF953F]/20"
                 in:scale={{ duration: 400, delay: index * 100 }}
               >
                 <!-- Card Icon -->
                 <div class="flex items-center gap-4 mb-4">
-                  <div class="flex-shrink-0 w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center group-hover:bg-amber-500/30 transition-colors">
+                  <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#BF953F]/20 to-[#B38728]/20 rounded-xl flex items-center justify-center group-hover:from-[#BF953F]/30 group-hover:to-[#B38728]/30 transition-all duration-300">
                     {#if getIconDetails(link.link).isIconify}
                       <Icon
                         icon={getIconDetails(link.link).icon}
-                        width="24"
-                        height="24"
-                        class="text-amber-400 group-hover:text-amber-300 transition-colors"
+                        width="28"
+                        height="28"
+                        class="text-[#BF953F] group-hover:text-[#FCF6BA] transition-colors duration-300"
                       />
                     {:else}
-                      <i class="fa-solid fa-link text-amber-400 group-hover:text-amber-300 transition-colors text-xl"></i>
+                      <i class="fa-solid fa-link text-[#BF953F] group-hover:text-[#FCF6BA] transition-colors duration-300 text-2xl"></i>
                     {/if}
                   </div>
                   <div class="flex-1">
-                    <h3 class="text-xl font-semibold text-white group-hover:text-amber-100 transition-colors">
+                    <h3 class="text-xl font-bold text-white group-hover:text-[#FCF6BA] transition-colors duration-300">
                       {link.title || getDomainName(link.link)}
                     </h3>
-                    <p class="text-sm text-amber-400/80 font-medium">
+                    <p class="text-sm text-[#BF953F] font-semibold tracking-wide">
                       {getDomainName(link.link)}
                     </p>
                   </div>
@@ -172,7 +205,7 @@
 
                 <!-- Card Description -->
                 {#if link.description}
-                  <p class="text-slate-300 mb-6 leading-relaxed">
+                  <p class="text-slate-300 mb-6 leading-relaxed text-sm">
                     {link.description}
                   </p>
                 {:else}
@@ -184,14 +217,14 @@
                   href={link.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold rounded-lg transition-all duration-300 hover:shadow-lg"
+                  class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-[#BF953F] to-[#B38728] hover:from-[#B38728] hover:to-[#BF953F] text-black font-bold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#BF953F]/25 hover:scale-[1.02]"
                 >
-                  Visit Site
+                  Access Service
                   <ExternalLink class="w-4 h-4" />
                 </a>
 
                 <!-- Hover Glow Effect -->
-                <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-500/0 via-amber-500/0 to-amber-500/0 group-hover:from-amber-500/5 group-hover:via-amber-500/10 group-hover:to-amber-500/5 transition-all duration-300 pointer-events-none"></div>
+                <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#BF953F]/0 via-[#BF953F]/0 to-[#BF953F]/0 group-hover:from-[#BF953F]/5 group-hover:via-[#BF953F]/10 group-hover:to-[#BF953F]/5 transition-all duration-500 pointer-events-none"></div>
               </div>
             {/each}
           </div>
@@ -201,22 +234,22 @@
             class="text-center py-16"
             in:fly={{ y: 30, duration: 800, delay: 400 }}
           >
-            <div class="max-w-md mx-auto">
-              <div class="w-24 h-24 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon icon="fa-solid:store" width="48" height="48" class="text-slate-500" />
+            <div class="max-w-lg mx-auto">
+              <div class="w-24 h-24 bg-gradient-to-br from-[#BF953F]/20 to-[#B38728]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon icon="mdi:store" width="48" height="48" class="text-[#BF953F]" />
               </div>
               <h3 class="text-2xl font-semibold text-white mb-4">
-                No Links Available
+                Services Available Soon
               </h3>
               <p class="text-slate-400 leading-relaxed mb-8">
-                Our shop links collection is currently being updated. Check back soon for exciting new additions!
+                Our premium digital services are being prepared. Professional marketplace solutions will be available soon.
               </p>
               {#if data.loggedIn}
                 <button
-                  on:click={handleDashboard}
-                  class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+                  onclick={handleDashboard}
+                  class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#BF953F] to-[#B38728] hover:from-[#B38728] hover:to-[#BF953F] text-black font-bold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#BF953F]/25"
                 >
-                  Manage Links
+                  Manage Services
                   <ArrowRight class="w-4 h-4" />
                 </button>
               {/if}
