@@ -5,7 +5,7 @@ import { verifyPasswordHash, createPasswordHash } from "$lib/server/password-has
 import { z } from "zod";
 
 export const load = async ({ locals, url }) => {
-  if (locals.user) return redirect(302, `/admin`);
+  if (locals.user) return redirect(302, `/dashboard`);
   
   // Get success message from URL if any
   const message = url.searchParams.get('message');
@@ -64,6 +64,6 @@ export const actions = {
       ...sessionCookie.attributes,
     });
 
-    return redirect(302, `/admin`);
+    return redirect(302, `/dashboard`);
   },
 };

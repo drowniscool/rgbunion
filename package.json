@@ -18,7 +18,9 @@
 		"db:studio:prd": "node scripts/studio-prod.js",
 		"db:studio:prd-alt": "cross-env NODE_ENV=production CLOUDFLARE_ACCOUNT_ID=56cc4248f307f90816b392513c27c7cb CLOUDFLARE_DATABASE_ID=48abac1b-634f-4ee8-88a4-5d836d4e5b81 CLOUDFLARE_D1_TOKEN=_bzd_81HEB8c4Ahd0cLUrGKZ_WJCkJoqR-Ukzo3q drizzle-kit studio",
 		"admin:create": "node scripts/create-admin.js",
-		"admin:create:prod": "node scripts/create-admin-prod.js"
+		"admin:create:prod": "node scripts/create-admin-prod.js",
+		"dev:populate": "node scripts/populate-dev-data-direct.js",
+		"dev:sql": "wrangler d1 execute rgbunion --local --file=scripts/dev-data.sql"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-cloudflare": "^7.0.1",

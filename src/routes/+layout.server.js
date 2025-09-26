@@ -2,6 +2,7 @@
 export async function load({ locals }) {
 	return {
 		user: locals.user,
-		loggedIn: locals.user?.id !== undefined
+		loggedIn: locals.user?.id !== undefined,
+		isAdmin: locals.user?.username === 'admin'
 	}
 }
