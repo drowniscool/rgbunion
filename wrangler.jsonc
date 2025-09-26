@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "huh",
+  "name": "rgbunion",
   "compatibility_date": "2025-04-09",
   "pages_build_output_dir": ".svelte-kit/cloudflare",
   "compatibility_flags": ["nodejs_compat"],
@@ -15,7 +15,7 @@
     {
       "binding": "DB",
       "database_name": "rgbunion",
-      "database_id": "0be15129-fb1a-4b68-9e0d-fca984e3d89c",
+      "database_id": "48abac1b-634f-4ee8-88a4-5d836d4e5b81",
       "migrations_dir": "migrations"
     }
   ],
@@ -38,9 +38,9 @@
    */
 
   "vars": {
-    "CLOUDFLARE_ACCOUNT_ID": "4242ad8203b7c75974e0140a60604904",
-    "CLOUDFLARE_DATABASE_ID": "0be15129-fb1a-4b68-9e0d-fca984e3d89c",
-    "CLOUDFLARE_D1_TOKEN": "jT-nLTYO1TxZJWU47ahzOwJ-9RTjOOO9AeXVd3ig"
+    "CLOUDFLARE_ACCOUNT_ID": "56cc4248f307f90816b392513c27c7cb",
+    "CLOUDFLARE_DATABASE_ID": "48abac1b-634f-4ee8-88a4-5d836d4e5b81",
+    "CLOUDFLARE_D1_TOKEN": "_bzd_81HEB8c4Ahd0cLUrGKZ_WJCkJoqR-Ukzo3q"
   }
   /**
    * Note: Use secrets to store sensitive data.
