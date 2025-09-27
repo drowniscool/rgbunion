@@ -67,7 +67,7 @@
   <div class="relative z-10 min-h-screen flex flex-col p-6 max-w-lg mx-auto">
     <button onclick={goBack} class="flex items-center gap-2 text-[#BF953F] mb-8 hover:text-[#FCF6BA] transition-all duration-300 group">
       <ArrowLeft size={20} class="transition-transform group-hover:-translate-x-1" />
-      <span class="font-medium">Back to Dashboard</span>
+      <span class="font-medium">Back to Admin</span>
     </button>
 
     <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
@@ -154,9 +154,10 @@
       </form>
     </div>
   </div>
-  
+
+  </div>
   <!-- Footer -->
-  <div class="mt-auto pt-8 text-center text-sm text-gray-400">
+  <div class="mt-auto pt-8 text-center text-sm text-slate-400">
     © {currentYear} RGBUNION. All Rights Reserved.
   </div>
 </div>

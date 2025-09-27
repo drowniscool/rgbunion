@@ -5,8 +5,7 @@
   import { cubicOut } from 'svelte/easing';
   import {
     Home,
-    LayoutDashboard,
-    User,
+  LayoutDashboard,
     LogOut,
     LogIn,
     Store,
@@ -30,13 +29,13 @@
 
   const userNavItems = [
     { href: '/shop', label: 'Shop', icon: Store },
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard }
+    { href: '/admin', label: 'Dashboard', icon: LayoutDashboard }
   ];
 
   const adminNavItems = [
     { href: '/shop', label: 'Shop', icon: Store },
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/admin', label: 'Admin', icon: User }
+    { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/admin/account', label: 'Account', icon: Settings }
   ];
 
   // Get current navigation items based on authentication and admin status
@@ -93,7 +92,7 @@
       <!-- Logo/Brand -->
       <div class="navbar-brand flex-shrink-0">
         <button
-          onclick={() => handleNavigation(loggedIn ? '/dashboard' : '/')}
+          onclick={() => handleNavigation(loggedIn ? '/admin' : '/')}
           class="brand-link group flex items-center focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-900 rounded-lg p-2"
           aria-label="RGBUNION Home"
         >

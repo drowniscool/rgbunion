@@ -63,7 +63,7 @@
   }
 
   function handleDashboard() {
-    goto("/dashboard");
+    goto("/admin");
   }
 
   // Get current year for footer
