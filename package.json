@@ -9,7 +9,7 @@
 		"preview": "npm run build && wrangler pages dev",
 		"prepare": "svelte-kit sync || echo ''",
 		"proxy": "wrangler dev node_modules/cfw-bindings-wrangler-bridge/worker/index.js",
-		"deploy": "npm run build && npx wrangler pages deploy .svelte-kit/cloudflare --commit-dirty=true --branch=master",
+		"deploy": "npm run build && npx wrangler pages deploy .svelte-kit/cloudflare --commit-dirty=true --branch=main",
 		"db:gen": "drizzle-kit generate",
 		"db:mig:local": "wrangler d1 migrations apply rgbunion --local",
 		"db:mig:prod": "wrangler d1 migrations apply rgbunion --remote",
