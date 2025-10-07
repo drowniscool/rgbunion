@@ -6,10 +6,10 @@ import { z } from "zod";
 
 export const load = async ({ locals, url }) => {
   if (locals.user) return redirect(302, `/admin`);
-  
+
   // Get success message from URL if any
   const message = url.searchParams.get('message');
-  
+
   return {
     message
   };

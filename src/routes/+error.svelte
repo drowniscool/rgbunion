@@ -11,6 +11,9 @@
 <div class="min-h-screen w-full flex items-center justify-center relative z-10">
   <main class="px-3 sm:px-4 w-full max-w-[500px]">
     <div class="text-center">
+      <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border border-[#BF953F]/40 bg-slate-900/80 shadow-lg shadow-black/30 ring-1 ring-black/40">
+        <img src="/logo.png" alt="RGBUNION logo" class="h-14 w-14 object-contain" />
+      </div>
       <h1 class="text-8xl font-bold bg-gradient-to-r from-[#BF953F] to-[#FCF6BA] bg-clip-text text-transparent mb-4">
         {$page.status}
       </h1>

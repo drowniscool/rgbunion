@@ -295,24 +295,6 @@
     animation: shrinkWidth 3s linear;
   }
 
-  /* Enhanced scrollbar styling */
-  :global(*::-webkit-scrollbar) {
-    width: 6px;
-  }
-
-  :global(*::-webkit-scrollbar-track) {
-    background: transparent;
-  }
-
-  :global(*::-webkit-scrollbar-thumb) {
-    background: #BF953F;
-    border-radius: 3px;
-  }
-
-  :global(*::-webkit-scrollbar-thumb:hover) {
-    background: #B38728;
-  }
-
   /* Custom focus styles for better accessibility */
   :global(.focus-ring:focus) {
     outline: 2px solid #BF953F !important;
