@@ -1,14 +1,14 @@
 import { shopCategoriesTable, shopItemsTable, shopSubcategoriesTable } from "$lib/server/db/schema";
 
 export const load = async ({ locals }) => {
-  const [categories, subcategories, items] = await Promise.all([
+  const [categories, subcategories, rawItems] = await Promise.all([
     locals.DB.select().from(shopCategoriesTable),
     locals.DB.select().from(shopSubcategoriesTable),
     locals.DB.select().from(shopItemsTable)
   ]);
 
   // Group items by category and subcategory for easier rendering
-  const itemsByCategory = items.reduce((acc, item) => {
+  const itemsByCategory = rawItems.reduce((acc, item) => {
     if (!acc[item.category_id]) {
       acc[item.category_id] = {
         items: [],

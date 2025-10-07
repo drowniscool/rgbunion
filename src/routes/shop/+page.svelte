@@ -1,20 +1,27 @@
 <script>
   import { page } from "$app/stores";
   import { fade, fly, scale } from "svelte/transition";
-  import { ExternalLink, ShoppingBag } from "lucide-svelte";
+  import { ExternalLink, ShoppingBag, Copy, Check } from "lucide-svelte";
   import Icon from '@iconify/svelte';
+  import { enhancedFade, staggeredSlide, scaleIn, blurReveal, toastSlide, MOTION_TOKENS } from '$lib/motion/transitions';
 
   const { data } = $props();
-  
+
   // Get current year for footer
   const currentYear = new Date().getFullYear();
-  
+
   let activeCategory = $state(null);
   let activeSubcategory = $state(null);
   let categories = $state(data.categories || []);
   let subcategories = $state(data.subcategories || []);
   let itemsByCategory = $state(data.itemsByCategory || {});
   let mounted = $state(false);
+
+  // Toast notification state
+  let toastMessage = $state('');
+  let showToast = $state(false);
+  let copiedItemId = $state(null);
+
 
   $effect(() => {
     categories = data.categories || [];
@@ -47,6 +54,53 @@
     return category.subcategories[activeSubcategory] || [];
   }
 
+  // Copy to clipboard functionality
+  async function copyToClipboard(text, itemId) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        // Modern API
+        await navigator.clipboard.writeText(text);
+      } else {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        textArea.remove();
+      }
+
+      // Show success feedback
+      copiedItemId = itemId;
+      showToast = true;
+      toastMessage = `Copied "${text}" to clipboard!`;
+
+      // Reset copied state after animation
+      setTimeout(() => {
+        copiedItemId = null;
+      }, 2000);
+
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        showToast = false;
+      }, 3000);
+
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+      // Show error feedback
+      showToast = true;
+      toastMessage = 'Failed to copy to clipboard';
+      setTimeout(() => {
+        showToast = false;
+      }, 3000);
+    }
+  }
+
+
   // Initialize mounted state
   import { onMount } from "svelte";
   onMount(() => {
@@ -66,33 +120,28 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .animate-fadeIn {
-    animation: fadeIn 0.4s ease-out;
-  }
-
-  /* Enhanced scrollbar styling */
-  :global(*::-webkit-scrollbar) {
-    width: 6px;
-  }
-
-  :global(*::-webkit-scrollbar-track) {
-    background: transparent;
-  }
-
-  :global(*::-webkit-scrollbar-thumb) {
-    background: #BF953F;
-    border-radius: 3px;
-  }
-
-  :global(*::-webkit-scrollbar-thumb:hover) {
-    background: #B38728;
-  }
 </style>
 
 <!-- Modern dark slate background with subtle pattern -->
 <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black">
   <!-- Subtle Background Pattern -->
   <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNCRjk1M0YiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iNCIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
+
+  <!-- Toast Notification -->
+  {#if showToast}
+    <div
+      class="fixed top-4 right-4 z-50 max-w-sm bg-slate-800/90 backdrop-blur-xl border border-[#BF953F]/50 rounded-xl p-4 shadow-2xl shadow-[#BF953F]/25"
+      in:toastSlide={{ direction: 'right' }}
+      out:toastSlide={{ direction: 'right' }}
+    >
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-gradient-to-r from-[#BF953F] to-[#B38728] rounded-full flex items-center justify-center">
+          <Check class="w-4 h-4 text-black" />
+        </div>
+        <p class="text-[#FCF6BA] font-medium text-sm">{toastMessage}</p>
+      </div>
+    </div>
+  {/if}
 
 <div class="relative z-10 p-4 sm:p-6 max-w-7xl mx-auto min-h-screen flex flex-col">
 
@@ -105,8 +154,15 @@
       Shop
     </h1>
     <p class="text-slate-300 text-lg max-w-2xl mx-auto">
-      Discover our curated selection of premium items and services
+      If you have any questions or want to purchase a specific item, just click the contact link under the product name — we'll get back to you quickly
     </p>
+
+    <!-- Terms Notice -->
+    <div class="bg-slate-800/40 border border-slate-700/40 rounded-lg px-4 py-3 mt-6 max-w-2xl mx-auto">
+      <p class="text-slate-400 text-sm text-center">
+        By purchasing you automatically agree to our <a href="/terms" class="text-[#BF953F] hover:text-[#FCF6BA] transition-colors duration-300" aria-label="Read Terms of Service">Terms of Service</a>
+      </p>
+    </div>
   </div>
 
     {#if categories.length === 0}
@@ -123,7 +179,7 @@
     {:else}
       <!-- Category Navigation -->
       {#if mounted}
-        <div class="mb-8" in:fly={{ y: 30, duration: 600 }}>
+        <div class="mb-8" in:enhancedFade={{ duration: MOTION_TOKENS.durations.slow, direction: 'up' }}>
           <h3 class="text-xl font-semibold text-[#FCF6BA] mb-4 text-center">Browse Categories</h3>
           <div class="flex flex-wrap gap-3 justify-center">
             <button
@@ -145,7 +201,7 @@
 
         <!-- Subcategory Navigation -->
         {#if activeCategory !== null && getSubcategoriesForCategory(activeCategory).length > 0}
-          <div class="mb-12" in:fly={{ y: 30, duration: 600, delay: 200 }}>
+          <div class="mb-12" in:enhancedFade={{ duration: MOTION_TOKENS.durations.slow, direction: 'up', delay: 200 }}>
             <h4 class="text-lg font-medium text-slate-300 mb-4 text-center">
               {categories.find(c => c.id === activeCategory)?.tag} Subcategories
             </h4>
@@ -174,14 +230,28 @@
             {#each getFilteredItems() as item, index (item.id)}
               <div
                 class="group bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 hover:shadow-2xl hover:shadow-[#BF953F]/10 hover:border-[#BF953F]/50 transition-all duration-300 hover:scale-[1.02]"
-                in:scale={{ duration: 400, delay: index * 100 }}
+                in:staggeredSlide={{ index, direction: 'up', distance: 30, staggerDelay: MOTION_TOKENS.stagger.normal }}
               >
+
                 <!-- Item Header -->
                 <div class="flex items-start justify-between gap-4 mb-4">
                   <div class="flex-1">
-                    <h3 class="font-bold text-[#FCF6BA] text-lg group-hover:text-white transition-colors mb-2">
-                      {item.name}
-                    </h3>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                      <h3 class="font-bold text-[#FCF6BA] text-lg group-hover:text-white transition-colors">
+                        {item.name}
+                      </h3>
+                      <button
+                        onclick={() => copyToClipboard(item.name, item.id)}
+                        class="flex-shrink-0 p-2 rounded-lg bg-slate-700/50 hover:bg-[#BF953F]/20 border border-slate-600/50 hover:border-[#BF953F]/40 transition-all duration-300 hover:scale-110 group/copy"
+                        title="Copy item name"
+                      >
+                        {#if copiedItemId === item.id}
+                          <Check class="w-4 h-4 text-green-400" />
+                        {:else}
+                          <Copy class="w-4 h-4 text-slate-400 group-hover/copy:text-[#BF953F]" />
+                        {/if}
+                      </button>
+                    </div>
                     <div class="flex items-center gap-2 mb-3">
                       <div class="px-3 py-1 bg-gradient-to-r from-[#BF953F] to-[#B38728] text-black text-sm font-semibold rounded-full">
                         {formatPrice(item.price)}
@@ -189,6 +259,19 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Item Description -->
+                {#if item.description && item.description.trim()}
+                  <div class="mb-4">
+                    <h4 class="text-sm font-semibold text-[#BF953F] mb-2 flex items-center gap-2">
+                      <span class="w-1 h-4 bg-gradient-to-b from-[#BF953F] to-[#B38728] rounded-full"></span>
+                      Description
+                    </h4>
+                    <p class="text-slate-300 text-sm leading-relaxed bg-slate-700/30 rounded-lg p-3 border-l-2 border-[#BF953F]/40">
+                      {item.description}
+                    </p>
+                  </div>
+                {/if}
 
                 <!-- Category Tags -->
                 <div class="flex flex-wrap gap-2 mb-4">
@@ -209,7 +292,7 @@
                   rel="noopener noreferrer"
                   class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-[#BF953F] to-[#B38728] hover:from-[#B38728] hover:to-[#BF953F] text-black font-bold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#BF953F]/25 hover:scale-[1.02] mt-4"
                 >
-                  View Item
+                  BUY
                   <ExternalLink class="w-4 h-4" />
                 </a>
 
