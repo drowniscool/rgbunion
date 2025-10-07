@@ -1,6 +1,6 @@
 import { initializeLucia } from '$lib/server/auth'
 import { dev } from '$app/environment'
-import { D1Database$, R2Bucket$ } from 'cfw-bindings-wrangler-bridge'
+import { D1Database$ } from 'cfw-bindings-wrangler-bridge'
 import { drizzle } from 'drizzle-orm/d1'
 import * as schema from '$lib/server/db/schema'
 
@@ -8,18 +8,13 @@ const getDevD1 = async (dbName) => {
 	return new D1Database$(dbName)
 }
 
-const getDevR2 = async (bucketName) => {
-	return new R2Bucket$(bucketName)
-}
 
 export const handle = async ({ event, resolve }) => {
-	// Initialize database and bucket first
+	// Initialize database
 	if (dev) {
 		event.locals.db = await getDevD1('DB')
-		event.locals.bucket = await getDevR2('BUCKET')
 	} else {
 		event.locals.db = event.platform?.env?.DB
-		event.locals.bucket = event.platform?.env?.BUCKET
 	}
 
 	event.locals.DB = drizzle(event.locals.db, { schema })
@@ -54,10 +49,19 @@ export const handle = async ({ event, resolve }) => {
 		event.locals.session = session
 	}
 
+	const shouldObfuscateLanding = (() => {
+		const flagFromBindings = event.platform?.env?.OBFUSCATE_HOME;
+		const flagFromProcess = typeof process !== 'undefined' ? process.env.OBFUSCATE_HOME : undefined;
+		const flag = flagFromBindings ?? flagFromProcess;
+		return event.url.pathname === '/' && String(flag).toLowerCase() === 'true';
+	})();
+
 	// Only resolve once
 	const response = await resolve(event, {
 		transformPageChunk: ({ html, done }) => {
-			if (event.url.pathname !== '/') return html;
+			if (!shouldObfuscateLanding) {
+				return html;
+			}
 			if (!done) return html;
 
 			// Extract the DOCTYPE and preserve it

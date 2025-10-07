@@ -43,6 +43,7 @@ export const shopItemsTable = sqliteTable("shop_items", {
   name: text("name").notNull(),
   price: integer("price").notNull(),
   link: text("link").notNull(),
+  description: text("description").default(""),
   category_id: integer("category_id")
     .notNull()
     .references(() => shopCategoriesTable.id, { onDelete: "cascade" }),
