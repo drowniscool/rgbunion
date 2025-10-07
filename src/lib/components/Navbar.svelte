@@ -385,8 +385,35 @@
     transform: translateZ(0); /* Force hardware acceleration */
   }
 
+  /* Smooth bottom gradient fade for seamless page integration */
+  .navbar-container::after {
+    content: '';
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0.8) 0%,
+      rgba(15, 23, 42, 0.5) 25%,
+      rgba(15, 23, 42, 0.2) 50%,
+      rgba(191, 149, 63, 0.03) 75%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: opacity;
+  }
+
   .navbar-container.scrolled {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 16px rgba(191, 149, 63, 0.1);
+  }
+
+  .navbar-container.scrolled::after {
+    opacity: 1;
   }
 
   .navbar-container.mounted {
@@ -627,6 +654,12 @@
     .navbar-container.scrolled {
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 1px 8px rgba(191, 149, 63, 0.1);
     }
+
+    /* Slightly reduce gradient height on mobile for better performance */
+    .navbar-container::after {
+      height: 20px;
+      bottom: -20px;
+    }
   }
 
   /* Reduced Motion Support */
@@ -636,6 +669,11 @@
       transform: none !important;
       backdrop-filter: blur(20px) !important;
       background-color: rgba(15, 23, 42, 0.95) !important;
+    }
+
+    .navbar-container::after {
+      transition: none;
+      opacity: 1 !important;
     }
 
     .nav-tab,
