@@ -24,69 +24,53 @@
     <!-- Material Design Geometric Loader -->
     <div class="relative flex flex-col items-center gap-8">
 
-      <!-- Animated Geometric Shapes Container -->
-      <div class="relative w-32 h-32" aria-hidden="true">
+      <!-- Animated Logo Container -->
+      <div class="relative w-40 h-40" aria-hidden="true">
 
-        <!-- Rotating Outer Hexagon -->
+        <!-- Rotating Glow Ring -->
         <div class="absolute inset-0 animate-spin-slow">
-          <svg viewBox="0 0 100 100" class="w-full h-full">
-            <polygon
-              points="50,10 90,30 90,70 50,90 10,70 10,30"
-              fill="none"
-              stroke="url(#goldGradient1)"
-              stroke-width="2"
-              class="origin-center animate-pulse-opacity"
-            />
-          </svg>
+          <div class="absolute inset-0 rounded-full border-2 border-[#BF953F]/30 border-t-[#FCF6BA] border-r-[#B38728]/50"></div>
         </div>
 
-        <!-- Counter-rotating Middle Diamond -->
-        <div class="absolute inset-0 flex items-center justify-center animate-spin-reverse">
-          <svg viewBox="0 0 60 60" class="w-20 h-20">
-            <polygon
-              points="30,5 55,30 30,55 5,30"
-              fill="none"
-              stroke="url(#goldGradient2)"
-              stroke-width="2.5"
-              class="origin-center"
-              style="animation: pulse-opacity 2s ease-in-out infinite 0.3s;"
-            />
-          </svg>
+        <!-- Counter-rotating Secondary Ring -->
+        <div class="absolute inset-2 animate-spin-reverse">
+          <div class="absolute inset-0 rounded-full border border-[#B38728]/20 border-b-[#BF953F]/40"></div>
         </div>
 
-        <!-- Pulsing Inner Circle -->
+        <!-- Pulsing Logo with Glow -->
         <div class="absolute inset-0 flex items-center justify-center">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#BF953F]/30 to-[#B38728]/30 backdrop-blur-sm border border-[#BF953F]/50 animate-pulse-scale"></div>
+          <div class="relative animate-pulse-scale">
+            <!-- Glow Effect Background -->
+            <div class="absolute inset-0 rounded-full bg-[#BF953F]/20 blur-2xl animate-pulse-glow"></div>
+
+            <!-- Logo Image -->
+            <img
+              src="/logo.png"
+              alt="RGBUNION"
+              class="relative z-10 h-28 w-28 object-contain"
+              style="filter: drop-shadow(0 0 20px rgba(191, 149, 63, 0.6)) drop-shadow(0 0 40px rgba(191, 149, 63, 0.3));"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
         </div>
 
         <!-- Orbiting Particles -->
         <div class="absolute inset-0 animate-spin-orbital">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#FCF6BA] shadow-lg shadow-[#FCF6BA]/50"></div>
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[#FCF6BA] shadow-lg shadow-[#FCF6BA]/60"></div>
         </div>
         <div class="absolute inset-0 animate-spin-orbital-reverse" style="animation-delay: 0.5s;">
-          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#BF953F] shadow-lg shadow-[#BF953F]/50"></div>
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[#BF953F] shadow-lg shadow-[#BF953F]/60"></div>
+        </div>
+        <div class="absolute inset-0 animate-spin-orbital" style="animation-delay: 1s;">
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#B38728] shadow-lg shadow-[#B38728]/50"></div>
         </div>
 
-        <!-- Shimmer Overlay -->
-        <div class="absolute inset-0 overflow-hidden rounded-full">
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#FCF6BA]/20 to-transparent animate-shimmer"></div>
+        <!-- Shimmer Sweep Effect -->
+        <div class="absolute inset-0 overflow-hidden rounded-full opacity-50">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#FCF6BA]/30 to-transparent animate-shimmer"></div>
         </div>
-
-        <!-- SVG Gradients -->
-        <svg width="0" height="0" class="absolute">
-          <defs>
-            <linearGradient id="goldGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#BF953F;stop-opacity:1" />
-              <stop offset="50%" style="stop-color:#FCF6BA;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#B38728;stop-opacity:1" />
-            </linearGradient>
-            <linearGradient id="goldGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#B38728;stop-opacity:1" />
-              <stop offset="50%" style="stop-color:#FCF6BA;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#BF953F;stop-opacity:1" />
-            </linearGradient>
-          </defs>
-        </svg>
       </div>
 
       <!-- Loading Text -->
@@ -152,8 +136,19 @@
       opacity: 0.6;
     }
     50% {
-      transform: scale(1.1);
-      opacity: 0.8;
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.15);
     }
   }
 
@@ -200,6 +195,10 @@
     animation: pulse-scale 2s ease-in-out infinite;
   }
 
+  .animate-pulse-glow {
+    animation: pulse-glow 2.5s ease-in-out infinite;
+  }
+
   .animate-shimmer {
     animation: shimmer 2.5s ease-in-out infinite;
   }
@@ -216,6 +215,7 @@
     .animate-spin-orbital-reverse,
     .animate-pulse-opacity,
     .animate-pulse-scale,
+    .animate-pulse-glow,
     .animate-shimmer,
     .animate-bounce-dot {
       animation: none;
@@ -223,7 +223,8 @@
 
     /* Show simple static loader for reduced motion */
     .animate-pulse-opacity,
-    .animate-pulse-scale {
+    .animate-pulse-scale,
+    .animate-pulse-glow {
       opacity: 0.8;
     }
   }
