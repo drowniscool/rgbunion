@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   import { ExternalLink, LogIn, ArrowRight } from "lucide-svelte";
   import Icon from '@iconify/svelte';
+  import { enhancedFade, staggeredSlide } from '$lib/motion/transitions';
 
   const { data } = $props();
   let mounted = $state(false);
@@ -86,6 +87,21 @@
   <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-16">
     <div class="max-w-6xl mx-auto text-center">
       <!-- Hero Logo -->
+      <div class="flex justify-center mb-10">
+        <div class="relative flex items-center justify-center h-32 w-32 sm:h-40 sm:w-40 lg:h-48 lg:w-48">
+          <span class="hero-logo-shadow"></span>
+          <img
+            src="/logo.png"
+            alt="RGBUNION emblem"
+            class="relative z-10 h-36 w-36 sm:h-44 sm:w-44 lg:h-52 lg:w-52 object-contain"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            style="filter: drop-shadow(0 14px 34px rgba(191, 149, 63, 0.45));"
+          />
+        </div>
+      </div>
+
       <div class="mb-8">
         <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] font-serif tracking-wide mb-4">
           RGBUNION
@@ -93,12 +109,12 @@
         <div class="flex items-center justify-center gap-4 mb-6">
           <div class="h-px bg-gradient-to-r from-transparent via-[#BF953F] to-transparent flex-1 max-w-24"></div>
           <p class="text-[#FCF6BA] text-lg sm:text-xl font-medium tracking-wide">
-            Digital Marketplace
+            Reliable, Guaranteed, Best
           </p>
           <div class="h-px bg-gradient-to-r from-transparent via-[#BF953F] to-transparent flex-1 max-w-24"></div>
         </div>
         <p class="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">
-          Professional digital services and premium marketplace solutions
+          From enrolls to cards, our products are known for top-tier quality and market-leading reliability — trusted by professionals who settle for nothing less than the best.
         </p>
       </div>
     </div>
@@ -107,49 +123,33 @@
   <!-- Main Content -->
   <main class="flex-1 px-4 sm:px-6 lg:px-8 pb-16">
     <div class="max-w-6xl mx-auto">
-      {#if mounted}
-        <!-- Welcome Section -->
+      <!-- Welcome Section -->
         <div
           class="text-center mb-16"
-          in:fly={{ y: 30, duration: 800, delay: 200 }}
+          in:enhancedFade={{ duration: 800, delay: 200, direction: 'up', distance: 30 }}
         >
-          <div class="mb-8">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              Premium
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728]">
-                Services
-              </span>
-            </h2>
-            <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-8">
-              Professional digital marketplace offering specialized services and premium data solutions.
-              Discrete, reliable, and efficient operations for business needs.
-            </p>
-          </div>
-
           <!-- Service Features -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div class="flex flex-col items-center p-4 bg-slate-800/30 rounded-xl border border-slate-700/50">
+            <div class="flex flex-col items-center p-4 mb-8 bg-slate-800/30 rounded-xl border border-slate-700/50">
               <div class="w-12 h-12 bg-[#BF953F]/20 rounded-full flex items-center justify-center mb-3">
-                <Icon icon="mdi:database-lock" width="24" height="24" class="text-[#BF953F]" />
+                <Icon icon="mdi:currency-usd" width="24" height="24" class="text-[#BF953F]" />
               </div>
-              <h3 class="text-white font-semibold mb-1">Data Solutions</h3>
-              <p class="text-slate-400 text-sm text-center">Specialized data services</p>
+              <h3 class="text-white font-semibold mb-1">Guaranteed Balance</h3>
+              <p class="text-slate-400 text-sm text-center"><i>Subject to <a href="/terms" class="text-[#BF953F] underline">Terms of Service</a></i></p>
             </div>
 
-            <div class="flex flex-col items-center p-4 bg-slate-800/30 rounded-xl border border-slate-700/50">
+            <div class="flex flex-col items-center p-4 mb-8 bg-slate-800/30 rounded-xl border border-slate-700/50">
               <div class="w-12 h-12 bg-[#BF953F]/20 rounded-full flex items-center justify-center mb-3">
-                <Icon icon="mdi:shield-check" width="24" height="24" class="text-[#BF953F]" />
+                <Icon icon="mdi:numeric-1-box" width="24" height="24" class="text-[#BF953F]" />
               </div>
-              <h3 class="text-white font-semibold mb-1">Secure Operations</h3>
-              <p class="text-slate-400 text-sm text-center">Professional reliability</p>
+              <h3 class="text-white font-semibold mb-1">First Hand</h3>
             </div>
 
-            <div class="flex flex-col items-center p-4 bg-slate-800/30 rounded-xl border border-slate-700/50">
+            <div class="flex flex-col items-center p-4 mb-8 bg-slate-800/30 rounded-xl border border-slate-700/50">
               <div class="w-12 h-12 bg-[#BF953F]/20 rounded-full flex items-center justify-center mb-3">
                 <Icon icon="mdi:clock-fast" width="24" height="24" class="text-[#BF953F]" />
               </div>
               <h3 class="text-white font-semibold mb-1">Fast Delivery</h3>
-              <p class="text-slate-400 text-sm text-center">Efficient processing</p>
             </div>
           </div>
         </div>
@@ -165,19 +165,20 @@
                 </span>
               </h3>
               <p class="text-slate-400 max-w-2xl mx-auto">
-                Access our professional services and marketplace offerings through verified channels.
+                You can find all our services, contact links, and channel information below.<br />
+                Feel free to reach out — we're here to help.
               </p>
             </div>
           </div>
 
           <div
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            in:fly={{ y: 30, duration: 800, delay: 400 }}
+            in:enhancedFade={{ duration: 800, delay: 400, direction: 'up', distance: 30 }}
           >
             {#each data.links as link, index (link.id)}
               <div
                 class="group relative bg-gradient-to-br from-slate-800/70 to-slate-900/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 hover:border-[#BF953F]/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-[#BF953F]/20"
-                in:scale={{ duration: 400, delay: index * 100 }}
+                in:staggeredSlide={{ index, direction: 'up', distance: 20, staggerDelay: 100 }}
               >
                 <!-- Card Icon -->
                 <div class="flex items-center gap-4 mb-4">
@@ -204,10 +205,16 @@
                 </div>
 
                 <!-- Card Description -->
-                {#if link.description}
-                  <p class="text-slate-300 mb-6 leading-relaxed text-sm">
-                    {link.description}
-                  </p>
+                {#if link.description && link.description.trim()}
+                  <div class="mb-6">
+                    <h4 class="text-sm font-semibold text-[#BF953F] mb-2 flex items-center gap-2">
+                      <span class="w-1 h-4 bg-gradient-to-b from-[#BF953F] to-[#B38728] rounded-full"></span>
+                      Description
+                    </h4>
+                    <p class="text-slate-300 text-sm leading-relaxed bg-slate-700/30 rounded-lg p-3 border-l-2 border-[#BF953F]/40">
+                      {link.description}
+                    </p>
+                  </div>
                 {:else}
                   <div class="mb-6"></div>
                 {/if}
@@ -219,7 +226,7 @@
                   rel="noopener noreferrer"
                   class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-[#BF953F] to-[#B38728] hover:from-[#B38728] hover:to-[#BF953F] text-black font-bold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#BF953F]/25 hover:scale-[1.02]"
                 >
-                  Access Service
+                  Open
                   <ExternalLink class="w-4 h-4" />
                 </a>
 
@@ -232,7 +239,7 @@
           <!-- Empty State -->
           <div
             class="text-center py-16"
-            in:fly={{ y: 30, duration: 800, delay: 400 }}
+            in:enhancedFade={{ duration: 800, delay: 400, direction: 'up', distance: 30 }}
           >
             <div class="max-w-lg mx-auto">
               <div class="w-24 h-24 bg-gradient-to-br from-[#BF953F]/20 to-[#B38728]/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -242,7 +249,7 @@
                 Services Available Soon
               </h3>
               <p class="text-slate-400 leading-relaxed mb-8">
-                Our premium digital services are being prepared. Professional marketplace solutions will be available soon.
+                Nothing available currently, come back later.
               </p>
               {#if data.loggedIn}
                 <button
@@ -256,7 +263,6 @@
             </div>
           </div>
         {/if}
-      {/if}
     </div>
   </main>
 
@@ -266,6 +272,9 @@
       <p class="text-slate-500 text-sm">
         © {currentYear} RGBUNION. All Rights Reserved.
       </p>
+      <p class="text-slate-500 text-xs sm:text-sm mt-2">
+        By continuing you agree to our <a href="/terms" class="text-[#BF953F] hover:text-[#FCF6BA] transition-colors duration-300" aria-label="Read RGBUNION Terms of Service">Terms of Service</a>
+      </p>
     </div>
   </footer>
 </div>
@@ -273,5 +282,27 @@
 <style>
   :global(body) {
     background: #000;
+  }
+
+  .hero-logo-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 36px;
+    background: radial-gradient(circle at 50% 40%, rgba(191, 149, 63, 0.45), rgba(15, 23, 42, 0) 65%);
+    filter: blur(28px);
+    opacity: 0.85;
+    animation: heroGlow 7s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  @keyframes heroGlow {
+    from {
+      transform: scale(0.96) translateY(4px);
+      opacity: 0.65;
+    }
+    to {
+      transform: scale(1.04) translateY(-2px);
+      opacity: 0.9;
+    }
   }
 </style>
