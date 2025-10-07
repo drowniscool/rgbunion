@@ -2,6 +2,7 @@
   import { enhance } from "$app/forms";
   import { page } from "$app/stores";
   import { ArrowLeft } from "lucide-svelte";
+  import { loading } from "$lib/stores/loading.js";
 
   const { form, data } = $props();
 
@@ -9,6 +10,7 @@
   let password = $state("");
   let error = $state("");
   let successMessage = $state(data.message || "");
+  let isSubmitting = $state(false);
 </script>
 
 <!-- Background with subtle pattern matching landing page -->
@@ -30,17 +32,48 @@
         <div class="text-center mb-8">
           <div class="w-16 h-16 bg-gradient-to-br from-[#BF953F]/20 to-[#B38728]/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#BF953F]/30">
             <svg class="w-8 h-8 text-[#BF953F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
             </svg>
           </div>
-          <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] mb-2" style="font-family: 'Cinzel', serif;">
-            Admin Login
-          </h2>
-          <p class="text-slate-400">Enter your credentials to access the admin panel</p>
+          <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] mb-2" style="font-family: 'Cinzel', serif;">
+            Admin Console
+          </h1>
+          <p class="text-slate-400 mb-4">Administrator access only</p>
+
+          <!-- Visitor redirect notice -->
+          <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-6">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="text-left">
+                <p class="text-blue-300 text-sm font-medium mb-2">Looking for the shop?</p>
+                <a href="/shop" class="inline-flex items-center gap-2 text-[#BF953F] hover:text-[#FCF6BA] transition-colors duration-200 font-medium text-sm group">
+                  <span>Browse products without logging in</span>
+                  <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Login Form -->
-        <form method="post" use:enhance class="space-y-6">
+        <form
+          method="post"
+          use:enhance={() => {
+            isSubmitting = true;
+            loading.start('Authenticating');
+
+            return async ({ update }) => {
+              await update();
+              isSubmitting = false;
+              loading.stop();
+            };
+          }}
+          class="space-y-6"
+        >
           <!-- Username Field -->
           <div class="space-y-2">
             <label for="username" class="block text-sm font-medium text-slate-300">Username</label>
@@ -113,21 +146,37 @@
           <!-- Submit Button -->
           <button
             type="submit"
-            disabled={!username || !password}
+            disabled={!username || !password || isSubmitting}
             class="w-full py-3 px-4 bg-gradient-to-r from-[#BF953F] to-[#B38728] hover:from-[#B38728] hover:to-[#BF953F] text-black font-semibold rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#BF953F]/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-800"
           >
             <span class="flex items-center justify-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-              </svg>
-              Login
+              {#if isSubmitting}
+                <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Authenticating...
+              {:else}
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                Access Admin Console
+              {/if}
             </span>
           </button>
         </form>
 
+        <!-- Terms Notice -->
+        <div class="mt-6 text-center">
+          <p class="text-slate-500 text-xs">
+            By accessing this system you agree to our <a href="/terms" class="text-[#BF953F] hover:text-[#FCF6BA] transition-colors duration-300" aria-label="Read RGBUNION Terms of Service">Terms of Service</a>
+          </p>
+        </div>
+
         <!-- Footer -->
         <div class="mt-8 pt-6 border-t border-slate-700/50 text-center">
-          <p class="text-slate-400 text-sm">Secure admin access to RGBUNION</p>
+          <p class="text-slate-400 text-sm">Authorized administrator access only</p>
+          <p class="text-slate-500 text-xs mt-1">Credentials required for system administration</p>
         </div>
       </div>
     </div>
