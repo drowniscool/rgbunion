@@ -75,7 +75,7 @@ The application uses five main tables:
 - `websitesTable` - Link management system (id, title, link, description, user_id)
 - `shopCategoriesTable` - E-commerce categories (id, tag)
 - `shopSubcategoriesTable` - E-commerce subcategories (id, name, category_id)
-- `shopItemsTable` - E-commerce items (id, name, price, link, category_id, subcategory_id)
+- `shopItemsTable` - E-commerce items (id, name, price, link, description, category_id, subcategory_id)
 
 ### Authentication Flow
 - Uses Lucia v3 with SQLite adapter
@@ -97,6 +97,7 @@ The application uses five main tables:
 - **Responsive Design**: Tailwind CSS with mobile-first approach
 - **Session Management**: Automatic session validation and cookie handling
 - **Database Bindings**: Local development uses Wrangler bridge, production uses platform bindings
+
 
 ## Development Environment Setup
 
@@ -122,6 +123,7 @@ bun run dev
 4. Test thoroughly before applying to production
 5. Apply to production: `bun run db:mig:prod`
 
+
 ## File Structure Key Points
 
 ### Server-Side Code
@@ -130,6 +132,7 @@ bun run dev
 - `src/lib/server/db/schema.js` - Database schema definitions
 - `src/lib/server/lucia.js` - Lucia auth configuration
 - `src/lib/server/auth.js` - Authentication utilities
+
 
 ### Route Handlers
 - `+page.server.js` files handle server-side logic
