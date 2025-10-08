@@ -153,17 +153,53 @@
     }
   }
 
+  // Gradient height constants (must match CSS)
+  const GRADIENT_HEIGHT_DESKTOP = 24;
+  const GRADIENT_HEIGHT_MOBILE = 20;
+
   // Initialize mounted state and handle scroll effects
   $effect(() => {
     mounted = true;
 
-    // Update navbar height for layout spacing
-    if (navbarElement) {
-      navbarHeight = navbarElement.offsetHeight;
+    if (!navbarElement) return;
+
+    // Calculate gradient height based on viewport width
+    const getGradientHeight = () => {
+      return window.innerWidth >= 1024 ? GRADIENT_HEIGHT_DESKTOP : GRADIENT_HEIGHT_MOBILE;
+    };
+
+    // Update navbar height including gradient extension
+    const updateHeight = () => {
+      const elementHeight = navbarElement.offsetHeight;
+      const gradientHeight = getGradientHeight();
+      navbarHeight = elementHeight;
+
+      // Pass back total visual height (element + gradient)
       if (navbarHeightProp !== undefined) {
-        navbarHeightProp = navbarHeight;
+        navbarHeightProp = elementHeight + gradientHeight;
       }
-    }
+    };
+
+    updateHeight();
+
+    // ResizeObserver for dynamic height updates
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeight();
+    });
+
+    // MediaQuery listener for responsive gradient height
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    const handleMediaChange = () => {
+      updateHeight();
+    };
+
+    resizeObserver.observe(navbarElement);
+    mediaQuery.addEventListener('change', handleMediaChange);
+
+    return () => {
+      resizeObserver.disconnect();
+      mediaQuery.removeEventListener('change', handleMediaChange);
+    };
   });
 
   // Handle scroll updates for parallax effects
@@ -279,7 +315,7 @@
       <!-- Mobile Menu Toggle -->
       <div class="navbar-mobile lg:hidden">
         <button
-          onclick={() => mobileMenuOpen = !mobileMenuOpen}
+          onclick={(e) => { e.stopPropagation(); mobileMenuOpen = !mobileMenuOpen; }}
           class="navbar-mobile-toggle p-2 rounded-lg text-[#FCF6BA]/70 hover:text-[#BF953F] hover:bg-[#BF953F]/10 transition-colors focus:outline-none focus:ring-2 focus:ring-[#BF953F] focus:ring-offset-2 focus:ring-offset-slate-900"
           aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileMenuOpen}

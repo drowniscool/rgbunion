@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition';
   import { quintOut, expoOut } from 'svelte/easing';
 
-  let { isLoading = false, message = '' } = $props();
+  let { isLoading = false, message = '', progress = 0 } = $props();
 
   // Check for reduced motion preference
   let prefersReducedMotion = $state(false);
@@ -13,6 +13,41 @@
 </script>
 
 {#if isLoading}
+  <!-- Material UI Progress Bar - Fixed at Top -->
+  <div
+    class="fixed top-0 left-0 right-0 z-[10000] h-1"
+    transition:fade={{ duration: prefersReducedMotion ? 100 : 200 }}
+    role="progressbar"
+    aria-valuenow={progress}
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-label="Loading progress"
+  >
+    <!-- Background Track -->
+    <div class="absolute inset-0 bg-slate-800/30 backdrop-blur-sm"></div>
+
+    <!-- Progress Fill with Gradient -->
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] transition-all duration-300 ease-out origin-left"
+      style="transform: scaleX({progress / 100}); transform-origin: left;"
+    >
+      <!-- Glow Effect -->
+      <div class="absolute inset-0 bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] blur-sm opacity-60"></div>
+
+      <!-- Shimmer Animation -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer-progress"></div>
+      </div>
+    </div>
+
+    <!-- Indeterminate Animation (when progress is 0 or very low) -->
+    {#if progress < 5}
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#FCF6BA]/60 to-transparent animate-indeterminate"></div>
+      </div>
+    {/if}
+  </div>
+
   <!-- Fullscreen Overlay with Backdrop Blur -->
   <div
     class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/95 backdrop-blur-md"
@@ -170,6 +205,25 @@
     }
   }
 
+  /* Progress Bar Animations */
+  @keyframes shimmer-progress {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+
+  @keyframes indeterminate {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .animate-shimmer-progress {
+    animation: shimmer-progress 1.5s ease-in-out infinite;
+  }
+
+  .animate-indeterminate {
+    animation: indeterminate 1.2s ease-in-out infinite;
+  }
+
   /* Apply Animations */
   .animate-spin-slow {
     animation: spin-slow 8s linear infinite;
@@ -217,7 +271,9 @@
     .animate-pulse-scale,
     .animate-pulse-glow,
     .animate-shimmer,
-    .animate-bounce-dot {
+    .animate-bounce-dot,
+    .animate-shimmer-progress,
+    .animate-indeterminate {
       animation: none;
     }
 
@@ -226,6 +282,12 @@
     .animate-pulse-scale,
     .animate-pulse-glow {
       opacity: 0.8;
+    }
+
+    /* Simplified progress bar transitions for reduced motion */
+    .animate-shimmer-progress,
+    .animate-indeterminate {
+      opacity: 0.5;
     }
   }
 

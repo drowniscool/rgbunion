@@ -24,11 +24,11 @@
   // Handle initial page load
   onMount(() => {
     // Show loader briefly on initial load for smooth entrance
-    loading.start('Initializing');
+    loading.start('Initializing', $page.url.pathname);
 
-    // Hide loader after app is ready
+    // Complete loader after app is ready
     setTimeout(() => {
-      loading.stop();
+      loading.complete();
       isInitialLoad = false;
     }, 600);
   });
@@ -47,12 +47,12 @@
       else if (targetPath === '/shop') message = 'Loading shop...';
       else if (targetPath === '/') message = 'Welcome back!';
       else if (targetPath === '/terms') message = 'Loading Terms & Conditions...';
-      loading.start(message);
+
+      // Start loading with route-based progress simulation
+      loading.start(message, targetPath);
     } else if (!$navigating && !isInitialLoad) {
-      // Navigation complete - hide loader after brief delay for smoothness
-      setTimeout(() => {
-        loading.stop();
-      }, 500);
+      // Navigation complete - jump to 100% then hide
+      loading.complete();
     }
   });
 </script>
@@ -62,14 +62,14 @@
 </svelte:head>
 
 <!-- Global Page Loader -->
-<PageLoader isLoading={$loading.isLoading} message={$loading.message} />
+<PageLoader isLoading={$loading.isLoading} message={$loading.message} progress={$loading.progress} />
 
-<div class="min-h-screen flex flex-col">
+<div class="min-h-screen flex flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-black">
   <!-- Fixed Navbar - shown on all pages for consistent navigation -->
   <Navbar bind:navbarHeight user={$user} loggedIn={$loggedIn} isAdmin={data.isAdmin} onProfileClick={openAccountModal} />
 
-  <!-- Main content with top padding to account for fixed navbar -->
-  <main class="flex-grow" style="padding-top: {Math.max(navbarHeight, 80)}px;">
+  <!-- Main content with top padding to account for fixed navbar (includes gradient) -->
+  <main class="flex-grow" style="padding-top: {navbarHeight || 104}px;">
     {@render children()}
   </main>
 </div>

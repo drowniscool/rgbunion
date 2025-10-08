@@ -311,7 +311,7 @@
       </div>
 
       <!-- Enhanced Links Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
         {#each data.links as link (link.id)}
           {@const iconDetails = getIconDetails(link.link)}
           <article class="group bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 rounded-3xl p-8 hover:shadow-2xl hover:shadow-[#BF953F]/15 hover:border-[#BF953F]/60 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1" in:fade={{ duration: 300 }}>
@@ -504,7 +504,7 @@
       <!-- Enhanced Shop Items -->
       <div class="space-y-8">
         <h2 class="text-3xl font-bold text-[#FCF6BA] text-center mb-8">Shop Items</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
           {#each items as item (item.id)}
             <article class="group bg-slate-800/60 backdrop-blur-xl border border-slate-700/60 rounded-3xl p-8 hover:shadow-2xl hover:shadow-[#BF953F]/15 hover:border-[#BF953F]/60 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1" in:fade={{ duration: 300 }}>
               <!-- Item Header -->
