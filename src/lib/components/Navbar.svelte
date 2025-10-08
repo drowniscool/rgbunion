@@ -51,14 +51,14 @@
     { href: '/', label: 'Home', icon: Home },
     { href: '/shop', label: 'Shop', icon: Store },
     { href: '/terms', label: 'Terms', icon: FileText },
-    { href: '/admin', label: 'Dashboard', icon: LayoutDashboard }
+    { href: '/admin', label: 'Control Center', icon: LayoutDashboard }
   ];
 
   const adminNavItems = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/shop', label: 'Shop', icon: Store },
     { href: '/terms', label: 'Terms', icon: FileText },
-    { href: '/admin', label: 'Dashboard', icon: LayoutDashboard }
+    { href: '/admin', label: 'Control Center', icon: LayoutDashboard }
   ];
 
   // Get current navigation items based on authentication and admin status

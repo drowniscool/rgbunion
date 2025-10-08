@@ -238,8 +238,8 @@
 </script>
 
 <svelte:head>
-  <title>Admin Dashboard - RGBUNION</title>
-  <meta name="description" content="Admin dashboard for managing links and shop">
+  <title>Control Center - RGBUNION</title>
+  <meta name="description" content="Admin control center for managing links, shop items, and categories">
 </svelte:head>
 
 <!-- Toast Notification -->
@@ -268,8 +268,59 @@
   <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNCRjk1M0YiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iNCIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
 
 <div class="relative z-10 p-4 sm:p-6 max-w-7xl mx-auto min-h-screen flex flex-col">
+  <!-- Hero Section -->
+  <div class="text-center mb-12 mt-8" in:fade={{ duration: 600 }}>
+    <!-- Icon Container -->
+    <div class="w-32 h-32 bg-gradient-to-br from-[#BF953F]/20 to-[#B38728]/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-[#BF953F]/40 shadow-xl shadow-[#BF953F]/10">
+      <Icon icon="mdi:shield-lock" width="56" color="#BF953F" />
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] mb-4" style="font-family: 'Cinzel', serif;">
+      Control Center
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-8">
+      Manage links, shop items, and categories
+    </p>
+
+    <!-- Stats Row -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
+      <!-- Total Links Stat -->
+      <div class="group bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 hover:border-[#BF953F]/50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#BF953F]/10">
+        <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] to-[#B38728] mb-2">
+          {data.links.length}
+        </div>
+        <div class="text-slate-300 text-sm md:text-base font-medium">
+          Total Links
+        </div>
+      </div>
+
+      <!-- Shop Items Stat -->
+      <div class="group bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 hover:border-[#BF953F]/50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#BF953F]/10">
+        <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] to-[#B38728] mb-2">
+          {items.length}
+        </div>
+        <div class="text-slate-300 text-sm md:text-base font-medium">
+          Shop Items
+        </div>
+      </div>
+
+      <!-- Categories Stat -->
+      <div class="group bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 hover:border-[#BF953F]/50 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#BF953F]/10">
+        <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#BF953F] to-[#B38728] mb-2">
+          {categories.length}
+        </div>
+        <div class="text-slate-300 text-sm md:text-base font-medium">
+          Categories
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Enhanced Tab Navigation -->
-  <nav class="flex justify-center mb-12 px-4" aria-label="Admin dashboard navigation">
+  <nav class="flex justify-center mb-12 px-4" aria-label="Control center navigation">
     <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-1.5 backdrop-blur-xl shadow-xl shadow-black/20 w-full max-w-md">
       <div class="flex space-x-2">
         <button
@@ -602,38 +653,6 @@
       </div>
     </div>
   {/if}
-
-  <!-- Enhanced Footer -->
-  <footer class="mt-auto pt-16 border-t border-slate-700/60">
-    <div class="text-center">
-      <div class="mb-6">
-        <div class="w-12 h-12 bg-gradient-to-br from-[#BF953F]/20 to-[#B38728]/20 rounded-xl flex items-center justify-center mx-auto mb-4 border border-[#BF953F]/30">
-          <Icon icon="fa-solid:crown" width="24" color="#BF953F" />
-        </div>
-        <p class="text-slate-400 text-lg font-medium mb-2">
-          © {currentYear} RGBUNION. All Rights Reserved.
-        </p>
-        <p class="text-slate-500 text-sm">
-          Admin Dashboard - Empowering seamless content management
-        </p>
-      </div>
-
-      <div class="flex justify-center items-center gap-6 text-slate-500 text-sm">
-        <button
-          onclick={() => $showAccountModal = true}
-          class="hover:text-[#BF953F] transition-colors duration-300 flex items-center gap-2"
-        >
-          <Icon icon="fa-solid:user-cog" width="16" />
-          <span>Account Settings</span>
-        </button>
-        <div class="w-1 h-4 bg-slate-600 rounded-full"></div>
-        <span class="flex items-center gap-2">
-          <Icon icon="fa-solid:shield-alt" width="16" />
-          <span>Secure Admin Portal</span>
-        </span>
-      </div>
-    </div>
-  </footer>
 </div>
 </div>
 
