@@ -41,18 +41,18 @@
       let message = 'Loading';
 
       // Custom messages for specific routes
-      if (targetPath === '/login') message = 'Opening admin console';
-      else if (targetPath === '/logout') message = 'Signing out';
-      else if (targetPath === '/admin') message = 'Loading admin panel';
-      else if (targetPath === '/dashboard') message = 'Loading dashboard';
-      else if (targetPath === '/shop') message = 'Loading shop';
-
+      if (targetPath === '/login') message = 'Signing in...';
+      else if (targetPath === '/logout') message = 'Signing out...';
+      else if (targetPath === '/admin') message = 'Loading Admin Panel...';
+      else if (targetPath === '/shop') message = 'Loading shop...';
+      else if (targetPath === '/') message = 'Welcome back!';
+      else if (targetPath === '/terms') message = 'Loading Terms & Conditions...';
       loading.start(message);
     } else if (!$navigating && !isInitialLoad) {
       // Navigation complete - hide loader after brief delay for smoothness
       setTimeout(() => {
         loading.stop();
-      }, 200);
+      }, 500);
     }
   });
 </script>
