@@ -156,8 +156,4 @@
   </div>
 
   </div>
-  <!-- Footer -->
-  <div class="mt-auto pt-8 text-center text-sm text-slate-400">
-    © {currentYear} RGBUNION. All Rights Reserved.
-  </div>
 </div>

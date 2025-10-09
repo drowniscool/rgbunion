@@ -266,17 +266,6 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="relative z-10 px-4 sm:px-6 lg:px-8 py-8 border-t border-slate-700/50">
-    <div class="max-w-6xl mx-auto text-center">
-      <p class="text-slate-500 text-sm">
-        © {currentYear} RGBUNION. All Rights Reserved.
-      </p>
-      <p class="text-slate-500 text-xs sm:text-sm mt-2">
-        By continuing you agree to our <a href="/terms" class="text-[#BF953F] hover:text-[#FCF6BA] transition-colors duration-300" aria-label="Read RGBUNION Terms of Service">Terms of Service</a>
-      </p>
-    </div>
-  </footer>
 </div>
 
 <style>

@@ -1046,18 +1046,6 @@
       </div>
     </div>
   {/if}
-
-  <!-- Footer with dark theme -->
-  <div class="mt-auto pt-12 border-t border-slate-700/50">
-    <div class="text-center">
-      <p class="text-slate-400 text-sm mb-2">
-        © {currentYear} RGBUNION. All Rights Reserved.
-      </p>
-      <p class="text-slate-500 text-xs">
-        Manage your community and shop from this secure dashboard
-      </p>
-    </div>
-  </div>
 </div>
 </div>
 

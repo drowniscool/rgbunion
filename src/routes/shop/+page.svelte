@@ -321,17 +321,5 @@
         </div>
       {/if}
     {/if}
- 
-  <!-- Footer with dark theme -->
-  <div class="mt-auto pt-12 border-t border-slate-700/50">
-    <div class="text-center">
-      <p class="text-slate-400 text-sm mb-2">
-        © {currentYear} RGBUNION. All Rights Reserved.
-      </p>
-      <p class="text-slate-500 text-xs">
-        Premium items and services curated for our community
-      </p>
-    </div>
-  </div>
 </div>
 </div>

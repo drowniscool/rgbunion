@@ -286,17 +286,5 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <div class="mt-16 pt-12 border-t border-slate-700/50">
-      <div class="text-center">
-        <p class="text-slate-400 text-sm mb-2">
-          © {currentYear} <b>RGBUNION</b>. All Rights Reserved.
-        </p>
-        <p class="text-slate-500 text-xs">
-          For legal questions or concerns, please contact our support team
-        </p>
-      </div>
-    </div>
-
   </div>
 </div>
