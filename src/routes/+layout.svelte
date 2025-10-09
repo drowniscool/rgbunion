@@ -6,6 +6,8 @@
   import { navigating } from "$app/stores";
   import Navbar from "$lib/components/Navbar.svelte";
   import PageLoader from "$lib/components/PageLoader.svelte";
+  import ScrollToTop from "$lib/components/ScrollToTop.svelte";
+  import Footer from "$lib/components/Footer.svelte";
   import { openAccountModal } from "$lib/stores/modal.js";
   import { loading } from "$lib/stores/loading.js";
   import { onMount } from "svelte";
@@ -72,5 +74,11 @@
   <main class="flex-grow" style="padding-top: {navbarHeight || 104}px;">
     {@render children()}
   </main>
+
+  <!-- Modular Footer Component (condensed spacing) -->
+  <Footer showTermsLink={$page.url.pathname !== '/terms'} />
+
+  <!-- Scroll-to-Top Button (site-wide) -->
+  <ScrollToTop />
 </div>
 
