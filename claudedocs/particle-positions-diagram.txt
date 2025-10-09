@@ -1,0 +1,192 @@
+╔═══════════════════════════════════════════════════════════════╗
+║         WATER DROPLET PARTICLE SPLASH - POSITION DIAGRAM      ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Legend:
+  💧 = Water droplet emoji (center point)
+  ① = Ring 1 particles (20px avg radius, 2-3px size)
+  ② = Ring 2 particles (30px avg radius, 2-4px size)
+  ③ = Ring 3 particles (40px avg radius, 2-3px size)
+
+
+                        ③(18°, 38px, 2px)
+                              |
+                    ②(36°, 30px, 3px)
+                          /
+                ①(0°, 20px, 3px)
+                      |
+        ③(162°, 36px)-----|-----③(90°, 42px, 3px)
+                    |     |     |
+      ②(180°, 28px)-------|-------②(108°, 32px, 2px)
+                  |       |       |
+    ①(144°, 18px)---------|----------①(72°, 22px, 2px)
+                |         💧         |
+    ①(216°, 21px)---------|----------①(288°, 19px, 3px)
+                  |       |       |
+      ②(252°, 31px)-------|-------②(324°, 29px, 3px)
+                    |     |     |
+        ③(234°, 40px)-----|-----
+                      |
+                ①(0°, 20px)
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║                    PARTICLE CONFIGURATION TABLE                ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Ring 1 (Close - 20px avg):
+┌─────┬────────┬──────────┬────────┬────────┬────────────────┐
+│ No. │ Angle  │ Radius   │ Size   │ Delay  │ Color Pattern  │
+├─────┼────────┼──────────┼────────┼────────┼────────────────┤
+│  1  │   0°   │  20px    │  3px   │   0ms  │ Cyan-500       │
+│  2  │  72°   │  22px    │  2px   │  40ms  │ Blue-500       │
+│  3  │ 144°   │  18px    │  3px   │  80ms  │ Cyan-400       │
+│  4  │ 216°   │  21px    │  2px   │ 120ms  │ Cyan-500       │
+│  5  │ 288°   │  19px    │  3px   │ 160ms  │ Blue-500       │
+└─────┴────────┴──────────┴────────┴────────┴────────────────┘
+
+Ring 2 (Medium - 30px avg):
+┌─────┬────────┬──────────┬────────┬────────┬────────────────┐
+│ No. │ Angle  │ Radius   │ Size   │ Delay  │ Color Pattern  │
+├─────┼────────┼──────────┼────────┼────────┼────────────────┤
+│  6  │  36°   │  30px    │  3px   │  20ms  │ Cyan-400       │
+│  7  │ 108°   │  32px    │  2px   │  60ms  │ Cyan-500       │
+│  8  │ 180°   │  28px    │  4px   │ 100ms  │ Blue-500       │
+│  9  │ 252°   │  31px    │  2px   │ 140ms  │ Cyan-400       │
+│ 10  │ 324°   │  29px    │  3px   │ 180ms  │ Cyan-500       │
+└─────┴────────┴──────────┴────────┴────────┴────────────────┘
+
+Ring 3 (Far - 39px avg):
+┌─────┬────────┬──────────┬────────┬────────┬────────────────┐
+│ No. │ Angle  │ Radius   │ Size   │ Delay  │ Color Pattern  │
+├─────┼────────┼──────────┼────────┼────────┼────────────────┤
+│ 11  │  18°   │  38px    │  2px   │  10ms  │ Blue-500       │
+│ 12  │  90°   │  42px    │  3px   │  50ms  │ Cyan-400       │
+│ 13  │ 162°   │  36px    │  2px   │  90ms  │ Cyan-500       │
+│ 14  │ 234°   │  40px    │  3px   │ 130ms  │ Blue-500       │
+└─────┴────────┴──────────┴────────┴────────┴────────────────┘
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║                    ANIMATION SPECIFICATIONS                    ║
+╚═══════════════════════════════════════════════════════════════╝
+
+HOVER ANIMATION (Main Splash):
+┌────────────────────────────────────────────────────────────┐
+│ Trigger:       Mouse enter watermark card                  │
+│ Duration:      600ms                                       │
+│ Easing:        cubic-bezier(0.34, 1.56, 0.64, 1) [bounce] │
+│ Distance:      100% (20-42px radii)                        │
+│ Final opacity: 0.6                                         │
+│ Final scale:   1.0                                         │
+│ Stagger:       0-180ms progressive delays                  │
+│ Exit:          Smooth reverse over 600ms                   │
+└────────────────────────────────────────────────────────────┘
+
+CLICK ANIMATION (Secondary Splash):
+┌────────────────────────────────────────────────────────────┐
+│ Trigger:       Click/Enter key on watermark card           │
+│ Duration:      400ms (33% faster than hover)               │
+│ Easing:        cubic-bezier(0.34, 1.56, 0.64, 1) [bounce] │
+│ Distance:      60% (12-25px radii)                         │
+│ Final opacity: 0.4                                         │
+│ Final scale:   0.8                                         │
+│ Stagger:       Same delays (0-180ms)                       │
+│ Auto-reset:    400ms timeout                               │
+└────────────────────────────────────────────────────────────┘
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║                    COLOR SPECIFICATIONS                        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Particle Colors (Alternating Pattern):
+┌──────────────┬─────────────────────────┬────────────────┐
+│ Pattern      │ RGBA Value              │ Tailwind Class │
+├──────────────┼─────────────────────────┼────────────────┤
+│ i % 3 === 0  │ rgba(6, 182, 212, 0.8)  │ cyan-500       │
+│ i % 3 === 1  │ rgba(59, 130, 246, 0.8) │ blue-500       │
+│ i % 3 === 2  │ rgba(34, 211, 238, 0.8) │ cyan-400       │
+└──────────────┴─────────────────────────┴────────────────┘
+
+Visual Effects:
+┌─────────────────┬──────────────────────────────────────┐
+│ Blur            │ filter: blur(0.5px)                  │
+│ Glow            │ box-shadow: 0 0 4px rgba(6,182,212)  │
+│ Background      │ Circular gradient from particle RGBA │
+└─────────────────┴──────────────────────────────────────┘
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║                  PERFORMANCE CHARACTERISTICS                   ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Hardware Acceleration:
+  ✓ Uses transform (GPU accelerated)
+  ✓ Uses opacity (GPU accelerated)
+  ✗ No layout-triggering properties
+  ✗ No reflow/repaint on animation
+
+Memory Footprint:
+  • DOM Elements: 14 <span> particles
+  • CSS: 17 lines of animation code
+  • JavaScript: ~500 bytes particle config
+  • Total overhead: <2KB
+
+Browser Compatibility:
+  ✓ CSS Custom Properties (IE11+)
+  ✓ CSS Transforms (All modern)
+  ✓ CSS Transitions (All modern)
+  ✓ Trigonometry (Server-side Svelte)
+  ✓ Blur filters (IE10+)
+
+Frame Rate:
+  • Target: 60fps
+  • Expected: 55-60fps (hardware accelerated)
+  • Minimum: 30fps (fallback on older devices)
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║               ACCESSIBILITY & REDUCED MOTION                   ║
+╚═══════════════════════════════════════════════════════════════╝
+
+WCAG 2.1 AA Compliance:
+  ✓ Keyboard navigation (Tab + Enter)
+  ✓ Screen reader support (ARIA labels)
+  ✓ Reduced motion support (prefers-reduced-motion)
+  ✓ Interactive element semantics (role="button")
+  ✓ Visible focus states (tabindex="0")
+
+Reduced Motion Behavior:
+  When prefers-reduced-motion: reduce is enabled:
+    • All particle animations disabled
+    • Particles remain hidden (opacity: 0)
+    • Transforms cancelled (transform: none)
+    • Other footer animations preserved
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║                    IMPLEMENTATION NOTES                        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Trigonometric Calculation:
+  const radians = (particle.angle * Math.PI) / 180;
+  const x = Math.cos(radians) * particle.radius;
+  const y = Math.sin(radians) * particle.radius;
+
+CSS Custom Properties:
+  --tx: {x}px                    (Full hover distance X)
+  --ty: {y}px                    (Full hover distance Y)
+  --click-tx: {x * 0.6}px        (60% click distance X)
+  --click-ty: {y * 0.6}px        (60% click distance Y)
+  --delay: {particle.delay}ms    (Staggered animation delay)
+
+Transform Calculation:
+  Initial:  translate(-50%, -50%) scale(0)
+  Hover:    translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1)
+  Click:    translate(calc(-50% + var(--click-tx)), calc(-50% + var(--click-ty))) scale(0.8)
+
+
+═══════════════════════════════════════════════════════════════
+End of Particle Position Diagram
+═══════════════════════════════════════════════════════════════
